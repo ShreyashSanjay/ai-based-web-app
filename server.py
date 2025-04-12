@@ -1,4 +1,4 @@
-#api request with appropriate response
+'''api request with appropriate response'''
 
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
@@ -7,7 +7,7 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def emo_detector():
-    #get the text from the arguments of the response
+    '''get the text from the arguments of the response'''
     text_to_analyze = request.args.get('textToAnalyze')
 
     #Get the relavent data from the application created and display each result
@@ -30,9 +30,10 @@ def emo_detector():
         f"The dominant emotion is {dominant_emotion}."
     )
 
-#Method renders the wanted
+
 @app.route("/")
 def render_index_page():
+    '''Method renders the wanted'''
     return render_template('index.html')
 
 if __name__ == "__main__":
