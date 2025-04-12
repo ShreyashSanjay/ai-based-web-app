@@ -16,10 +16,10 @@ def emotion_detector(text_to_analyse):
         return {'error': f'Invalid text! Please try again!. {response.status_code}'}
     
     # Step 2: Convert the response text into a dictionary
-    response_data = response.json()
+    converted_response = json.loads(response.text)
     
     # Step 3: Extract required set of emotions and their scores
-    predictions = response_data.get("emotionPredictions", [])
+    predictions = converted_response.get("emotionPredictions", [])
     if not predictions:
         return {'error': 'No emotion predictions found in the response'}
     
@@ -39,7 +39,21 @@ def emotion_detector(text_to_analyse):
         # Ensure there are non-zero emotion scores
         dominant_emotion_index = emotion_list.index(max(emotion_list))
         dominant_emotion_key = emotion_keys[dominant_emotion_index]
+    
+    # Step 7: Error handling
+    elif response.status_code == 400:
+        anger_score = None
+        disgust_score = None
+        fear_score = None
+        joy_score = None
+        sadness_score = None
+        dominant_emotion_key = None
+    
+    elif(dominant_emotion_key == None):
+        print("Invalid text! Please try again!.") 
 
+
+    
     # Step 5: Return the required output format
     result = {
         'anger': anger_score,
@@ -49,4 +63,5 @@ def emotion_detector(text_to_analyse):
         'sadness': sadness_score,
         'dominant_emotion': dominant_emotion_key
     }
+
     return result  

@@ -12,6 +12,8 @@ def emo_detector():
 
     #Get the relavent data from the application created and display each result
     response = emotion_detector(text_to_analyze)
+    if 'error' in response:
+        return "Invalid text! Please try again!."
     anger = response['anger']
     disgust = response['disgust']
     fear = response['fear']
